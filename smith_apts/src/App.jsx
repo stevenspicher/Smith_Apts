@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {Box, CssBaseline, Typography, useMediaQuery, useTheme} from "@mui/material";
+import RentalPage from "./Components/Rental.jsx";
+import Calendar from "./Components/Calendar.jsx";
+import MapPage from "./Components/MapPage.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+const App = () => {
+    const theme = useTheme();
+    const isMobile  = useMediaQuery(theme.breakpoints.down("sm"));
+    return (
+        <Router>
+            <CssBaseline />
+            <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                minHeight="100vh"
+                minWidth="100vw"
+
+                bgcolor="rgba(255,255,255,0.5)" // This makes the background translucent
+                // style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "contain", backgroundRepeat: "no-repeat" }}
+            >
+                <Box >
+                    <Typography variant={isMobile ? "h4" : "h1"}>Smith Apts</Typography>
+                </Box>
+                <Routes>
+                    <Route path="/rental" element={<RentalPage />} />
+                    <Route path="/calendar" element={<Calendar />} />
+                    <Route path="/" element={<MapPage />} />
+                </Routes>
+            </Box>
+        </Router>
+    );
 }
 
-export default App
+export default App;
