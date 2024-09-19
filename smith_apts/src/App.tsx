@@ -6,8 +6,6 @@ import Calendar from "./Components/Calendar.tsx";
 import RentalPage from "./Components/Rental.tsx";
 
 
-
-
 const App: React.FC = () => {
     const theme = useTheme();
     const isMobile : any = useMediaQuery(theme.breakpoints.down("sm"));
