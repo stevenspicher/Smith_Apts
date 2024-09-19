@@ -15,7 +15,7 @@ import frontExt from "../assets/front_ext.jpg"
 import {useNavigate} from "react-router-dom";
 
 const style = {
-    position: 'absolute' as 'absolute',
+    position: 'absolute',
     top: '70%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -26,7 +26,6 @@ const style = {
     p: 4,
 };
 
-// Then define your default icon
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -36,7 +35,8 @@ L.Icon.Default.mergeOptions({
 });
 
 
-const MapPage: any = () => {
+
+const MapPage = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -45,13 +45,13 @@ const MapPage: any = () => {
 
 
     // Define a default position
-    const position : any = [42.84532165037985, -106.31112558798915];
+    const position  = [42.84532165037985, -106.31112558798915];
 
     // Hooks for responsive design
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-    const popupRef : any = useRef(null);
+    const popupRef  = useRef(null);
 
     useEffect(() => {
         if (popupRef.current) {

@@ -1,6 +1,6 @@
-
+declare module './Components/MapPage.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MapPage from "./Components/MapPage.tsx";
+import MapPage from "./Components/MapPage.jsx";
 import {Box, CssBaseline, Typography, useMediaQuery, useTheme} from "@mui/material";
 import Calendar from "./Components/Calendar.tsx";
 import RentalPage from "./Components/Rental.tsx";
