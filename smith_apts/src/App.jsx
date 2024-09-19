@@ -1,8 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {Box, CssBaseline, Typography, useMediaQuery, useTheme} from "@mui/material";
+import 'bootstrap/dist/css/bootstrap.css';
 import RentalPage from "./Components/Rental.jsx";
-import Calendar from "./Components/Calendar.jsx";
+import CalendarPage from "./Components/Calendar.jsx";
 import MapPage from "./Components/MapPage.jsx";
+import TitlePage from "./Components/TitlePage.jsx";
+import Checkout from "./Components/Checkout.jsx";
 
 
 
@@ -19,16 +22,18 @@ const App = () => {
                 minHeight="100vh"
                 minWidth="100vw"
 
-                bgcolor="rgba(255,255,255,0.5)" // This makes the background translucent
-                // style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "contain", backgroundRepeat: "no-repeat" }}
+                bgcolor="lightgrey"
             >
-                <Box >
-                    <Typography variant={isMobile ? "h4" : "h1"}>Smith Apts</Typography>
-                </Box>
+
+                <TitlePage isMobile={isMobile}/>
+                {/*<Box >*/}
+                {/*    <Typography variant={isMobile ? "h4" : "h1"}>Windy City Smiths</Typography>*/}
+                {/*</Box>*/}
                 <Routes>
                     <Route path="/rental" element={<RentalPage />} />
-                    <Route path="/calendar" element={<Calendar />} />
+                    <Route path="/calendar" element={<CalendarPage />} />
                     <Route path="/" element={<MapPage />} />
+                    <Route path="/checkout" element={<Checkout />} />
                 </Routes>
             </Box>
         </Router>

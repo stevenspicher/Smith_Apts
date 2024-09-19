@@ -1,78 +1,113 @@
-import { Button, Container, Grid, Typography } from "@mui/material";
+import {Button, Container, Divider, Grid2, Stack, Typography} from "@mui/material";
 import { Box } from "@mui/system";
 import {useNavigate} from "react-router-dom";
 import livingRoom from "../assets/living_room.jpg";
 import bathroom from "../assets/bathroom.jpg";
 import frontDoor from "../assets/front_door.jpg"
+import { Carousel } from 'react-bootstrap';
+
+import BedIcon from '@mui/icons-material/Bed';
+import KitchenIcon from '@mui/icons-material/Kitchen';
 
 const RentalPage = () => {
     const navigate = useNavigate();
     const images = [frontDoor, livingRoom, bathroom]; // You should replace this with actual image URLs
-    const highlights = ["Highlight 1", "Highlight 2", "Highlight 3"];
-    const details = ["Detail 1", "Detail 2", "Detail 3"];
+    const highlights = ["Free Wifi", "Grill", "Air Conditioning"];
+    const details = [
+        {detail: "Full Bed", icon: BedIcon },
+        {detail: "Kitchen", icon: KitchenIcon },
+        {detail: "Full Bed", icon: BedIcon },
+];
 
     return (
-        <Container>
-            <Grid container spacing={3}>
-
+        <Box>
+            <Box spacing={3}>
+<Typography>314 S. Jackson</Typography>
                 {/* Gallery section */}
-                <Grid item xs={12}>
-                    <Typography variant="h2">Gallery</Typography>
-                    {images.map((img, idx) => (
-                        <Box key={idx}
-                             width={'7%' } height={'50vh'}
-                             display="flex"
-                             flexDirection="column"
-                             alignItems="center"
-                             border={1} borderColor="grey.500" overflow="hidden"
-                             borderRadius={5}
-                        >  {/* Add this line */}
-                            <img src={img} alt="Rental House" />
-                        </Box>
-                    ))}
-                </Grid>
+                <Grid2  xs={12}>
+
+                    <Carousel>
+                        {images.map((img, idx) => (
+                            <Carousel.Item key={idx}>
+                                <img
+                                    className="d-block w-100"
+                                    style={{height: '40vh', objectFit: 'cover'}}
+                                    src={img}
+                                    alt="Rental House"
+                                />
+
+                            </Carousel.Item>
+                        ))}
+                    </Carousel>
+                </Grid2>
+
 
                 {/* Highlights */}
-                <Grid item xs={12} sm={6}>
-                    <Typography variant="h2">Highlights</Typography>
+                <Grid2 marginTop={"10px"} xs={12} sm={6}>
+                        <Stack spacing={2} direction={"row"} alignItems="center" justifyContent="center">
                     {highlights.map((highlight, idx) => (
-                        <Typography variant="body1" key={idx}>
+                        <div key={idx}>
+                            <Divider orientation="vertical" flexItem />
+                            <Typography  variant="body1" >
                             {highlight}
                         </Typography>
+
+                        </div>
                     ))}
-                </Grid>
+                        </Stack>
+                </Grid2>
 
                 {/* Details */}
-                <Grid item xs={12} sm={6}>
-                    <Typography variant="h2">Details</Typography>
-                    {details.map((detail, idx) => (
+                <Grid2  marginTop={'20px'} xs={12} sm={6} >
+                    {details.map((item, idx) => {
+                        const IconComponent = item.icon;
+                        return (
+                            <Stack marginTop={'5px'} key={idx} spacing={4} direction={"row"} >
+                            {IconComponent && <IconComponent />}
                         <Typography variant="body1" key={idx}>
-                            {detail}
+                            {item.detail}
                         </Typography>
-                    ))}
-                </Grid>
+                        </Stack>
+
+                    )})}
+                </Grid2>
 
                 {/* Buttons */}
-                <Grid item xs={12} sm={6}>
+                <Box
+                    display="flex"
+                    flexDirection="column"
+                    minHeight="100vh"
+                    minWidth="100vw"
+
+                    bgcolor="lightgrey"
+                >
+                <Grid2 margin={"5px"} xs={12} sm={6}>
                     <Button
+
                         variant="contained"
                         color="primary"
                         onClick={() => {navigate("/calendar")}}
                     >View Availability</Button>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Button variant="contained" color="secondary">Rent this Home</Button>
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                </Grid2>
+                <Grid2 margin={"5px"}  xs={12} sm={6}>
                     <Button
                         variant="contained"
                         color="secondary"
+                        onClick={() => {navigate("/checkout")}}
+                    >Rent this Home</Button>
+                </Grid2>
+                <Grid2 margin={"5px"} xs={12} sm={6}>
+                    <Button
+                        margin={"5px"}
+                        variant="contained"
+                        color="secondary"
                         onClick={() => {navigate("/")}}
-                    >Back</Button>
-                </Grid>
+                    >Map</Button>
+                </Grid2>
+                </Box>
 
-            </Grid>
-        </Container>
+            </Box>
+        </Box>
     );
 };
 

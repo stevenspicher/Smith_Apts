@@ -2,7 +2,7 @@ import 'leaflet/dist/leaflet.css'
 import L from 'leaflet';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import {Box, Container, useMediaQuery, useTheme,} from "@mui/material";
+import {Box, Container, Stack, TextField, useMediaQuery, useTheme,} from "@mui/material";
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -72,17 +72,20 @@ const MapPage = () => {
     }, []);
 
     return (
+
+
+
         <Container fixed style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: "80vh" }}>
             <Box width={isMobile ? '70%' : 600} height={isMobile ? '60vh' : 400}
                  display="flex"
                  flexDirection="column"
                  alignItems="center"
-                 border={1} borderColor="grey.500" overflow="hidden"
+                 border={2} borderColor="grey.500" overflow="hidden"
                  borderRadius={5}
             >  {/* Add this line */}
                 <MapContainer style={{ width: '100%', height: '100%' }}
                               center={position}
-                              zoom={16}
+                              zoom={15}
                               minZoom={11}
                               maxZoom={19}
                 >
@@ -140,6 +143,7 @@ const MapPage = () => {
 
             </Box>
         </Container>
+
     );
 }
 
