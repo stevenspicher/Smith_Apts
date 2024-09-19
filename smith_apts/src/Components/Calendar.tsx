@@ -30,7 +30,7 @@ const Calendar = () => {
                     onChange={handleSelect}
                     months={1}
                     direction="horizontal"
-                    showSelectionPreview={true}
+                    //showSelectionPreview={true}
                     moveRangeOnFirstSelection={false}
                     rangeColors={["#3d91ff"]}
                     disabledDay={d => !isSameDay(d, new Date())}
