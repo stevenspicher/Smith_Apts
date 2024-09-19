@@ -4,12 +4,14 @@ import MapPage from "./Components/MapPage.tsx";
 import {Box, CssBaseline, Typography, useMediaQuery, useTheme} from "@mui/material";
 import Calendar from "./Components/Calendar.tsx";
 import RentalPage from "./Components/Rental.tsx";
+import {useHistory} from "react-router-dom";
+import backgroundImage from "./assets/door.jpg"
 
 
 
 const App: React.FC = () => {
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+    const isMobile : any = useMediaQuery(theme.breakpoints.down("sm"));
     return (
         <Router>
             <CssBaseline />
@@ -19,7 +21,10 @@ const App: React.FC = () => {
                 alignItems="center"
                 minHeight="100vh"
                 minWidth="100vw"
-            >
+
+                bgcolor="rgba(255,255,255,0.5)" // This makes the background translucent
+                // style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "contain", backgroundRepeat: "no-repeat" }}
+              >
                 <Box >
                     <Typography variant={isMobile ? "h4" : "h1"}>Smith Apts</Typography>
                 </Box>

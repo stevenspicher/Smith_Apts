@@ -8,10 +8,12 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {useEffect, useRef, useState} from "react";
+import frontExt from "../assets/front_ext.jpg"
+import {useNavigate} from "react-router-dom";
 
 const style = {
     position: 'absolute' as 'absolute',
-    top: '80%',
+    top: '70%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
@@ -23,7 +25,7 @@ const style = {
 
 
 const MapPage: any = () => {
-
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -59,12 +61,14 @@ const MapPage: any = () => {
     }, []);
 
     return (
-        <Container fixed style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: "70vh" }}>
-            <Box width={isMobile ? '80%' : 600} height={isMobile ? '60vh' : 400}
+        <Container fixed style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: "80vh" }}>
+            <Box width={isMobile ? '70%' : 600} height={isMobile ? '60vh' : 400}
                  display="flex"
                  flexDirection="column"
                  alignItems="center"
-                 border={1} borderColor="grey.500" overflow="hidden">
+                 border={1} borderColor="grey.500" overflow="hidden"
+                 borderRadius={5}
+            >  {/* Add this line */}
                 <MapContainer style={{ width: '100%', height: '100%' }}
                               center={position}
                               zoom={16}
@@ -103,17 +107,27 @@ const MapPage: any = () => {
                     <Fade in={open}>
                         <Box sx={style}>
                             <Typography id="transition-modal-title" variant="h6" component="h2">
-                                Text in a modal
+                                314 S. Jackson Street
                             </Typography>
-                            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                            <Typography>
+                                Casper, Wyoming
                             </Typography>
+                            <Typography id="transition-modal-description" sx={{mt: 2}}>
+                                Full Kitchen, Master Bedroom, Full bath
+                            </Typography>
+                            <Typography>
+                                ??? Sq ft
+                            </Typography>
+                            <Button
+                                onClick={() => {navigate("/rental")}}
+                            > View Rental</Button>
+                            <img src={frontExt} alt="Front Extension" style={{width: '100%', height: 'auto'}}/>
                         </Box>
                     </Fade>
                 </Modal>
 
 
-        </Box>
+            </Box>
         </Container>
     );
 }
