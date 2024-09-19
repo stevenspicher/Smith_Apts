@@ -10,12 +10,12 @@ const Calendar = () => {
     const navigate = useNavigate();
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(addDays(new Date(), 7));
-    const selectionRange = {
+    const selectionRange : any = {
         startDate: startDate,
         endDate: endDate,
         key: "selection",
     };
-    function handleSelect(ranges) {
+    function handleSelect(ranges : any) {
         setStartDate(ranges.selection.startDate);
         setEndDate(ranges.selection.endDate);
     }

@@ -33,14 +33,13 @@ const MapPage: any = () => {
 
 
     // Define a default position
-    const position = [42.84532165037985, -106.31112558798915];
-    const apt1 = []
+    const position : any = [42.84532165037985, -106.31112558798915];
 
     // Hooks for responsive design
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-    const popupRef = useRef(null);
+    const popupRef : any = useRef(null);
 
     useEffect(() => {
         if (popupRef.current) {
@@ -83,7 +82,7 @@ const MapPage: any = () => {
                         key={"apt1"}
                         position={[42.84703212235411, -106.31132267760357]}
                     >
-                        <Popup onChange={() => console.log("click")}>
+                        <Popup >
 
                             <Button
                                 onClick={() => {handleOpen()}}

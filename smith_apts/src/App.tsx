@@ -4,8 +4,7 @@ import MapPage from "./Components/MapPage.tsx";
 import {Box, CssBaseline, Typography, useMediaQuery, useTheme} from "@mui/material";
 import Calendar from "./Components/Calendar.tsx";
 import RentalPage from "./Components/Rental.tsx";
-import {useHistory} from "react-router-dom";
-import backgroundImage from "./assets/door.jpg"
+
 
 
 
