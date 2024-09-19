@@ -1,4 +1,5 @@
 import 'leaflet/dist/leaflet.css'
+import L from 'leaflet';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import {Box, Container, useMediaQuery, useTheme,} from "@mui/material";
@@ -6,6 +7,8 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import Typography from '@mui/material/Typography';
 import {useEffect, useRef, useState} from "react";
 import frontExt from "../assets/front_ext.jpg"
@@ -22,6 +25,15 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
+
+// Then define your default icon
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: markerIcon,
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow
+});
 
 
 const MapPage: any = () => {
