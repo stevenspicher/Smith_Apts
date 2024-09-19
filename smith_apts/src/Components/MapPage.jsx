@@ -7,8 +7,8 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-// import markerIcon from 'leaflet/dist/images/marker-icon.png';
-// import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import Typography from '@mui/material/Typography';
 import {useEffect, useRef, useState} from "react";
 import frontExt from "../assets/front_ext.jpg"
@@ -26,13 +26,13 @@ const style = {
     p: 4,
 };
 
-// delete L.Icon.Default.prototype._getIconUrl;
-//
-// L.Icon.Default.mergeOptions({
-//     iconRetinaUrl: markerIcon,
-//     iconUrl: markerIcon,
-//     shadowUrl: markerShadow
-// });
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: markerIcon,
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow
+});
 
 
 
