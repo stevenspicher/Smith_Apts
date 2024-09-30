@@ -115,6 +115,7 @@ const CalendarPage = () => {
             }
         } else {
             console.log("Please select a valid date range.");
+            alert('Please select a valid date range.');
         }
     };
 

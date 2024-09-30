@@ -27,7 +27,7 @@ const RentalPage = () => {
     return (
         <Box>
             <Box spacing={3}>
-                <Typography>314 S. Jackson</Typography>
+                <Typography style={{margin: '10px'}}>314 S. Jackson</Typography>
                 {/* Gallery section */}
                 <Grid2 xs={12}>
 
@@ -90,15 +90,15 @@ const RentalPage = () => {
                     <Grid2 margin={"5px"} xs={12} sm={6}>
                         <CalendarPage/>
                     </Grid2>
-                    <Grid2 margin={"5px"} xs={12} sm={6}>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => {
-                                navigate("/checkout")
-                            }}
-                        >Rent this Home</Button>
-                    </Grid2>
+                    {/*<Grid2 margin={"5px"} xs={12} sm={6}>*/}
+                    {/*    <Button*/}
+                    {/*        variant="contained"*/}
+                    {/*        color="secondary"*/}
+                    {/*        onClick={() => {*/}
+                    {/*            navigate("/checkout")*/}
+                    {/*        }}*/}
+                    {/*    >Rent this Home</Button>*/}
+                    {/*</Grid2>*/}
                     <Grid2 margin={"5px"} xs={12} sm={6}>
                         <Button
                             margin={"5px"}
