@@ -130,10 +130,10 @@ const MapPage = () => {
                                 Full Kitchen, Master Bedroom, Full bath
                             </Typography>
                             <Typography>
-                                ??? Sq ft
+                                900 Sq ft
                             </Typography>
                             <Button
-                                onClick={() => {navigate("/rental")}}
+                                onClick={() => {navigate("/")}}
                             > View Rental</Button>
                             <img src={frontExt} alt="Front Extension" style={{width: '100%', height: 'auto'}}/>
                         </Box>

@@ -4,6 +4,11 @@ import {useNavigate} from "react-router-dom";
 import {Accessibility} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 
+
+/*
+code or some way to allow for discounts
+ */
+
 const Checkout = () => {
     const navigate = useNavigate();
 
@@ -21,12 +26,12 @@ const Checkout = () => {
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => {navigate("/rental")}}
+                    onClick={() => {navigate("/")}}
                 >Rental</Button>
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => {navigate("/")}}
+                    onClick={() => {navigate("/map")}}
                 >Map</Button>
             </Grid2>
             </Stack>

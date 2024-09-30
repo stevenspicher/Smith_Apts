@@ -4,6 +4,10 @@ import { Box, ThemeProvider } from '@mui/system';
 import { createTheme } from '@mui/system';
 import Fade from '@mui/material/Fade';
 
+/*
+remove box and change text
+ */
+
 const theme = createTheme({
     palette: {
         primary: {
@@ -17,7 +21,6 @@ const theme = createTheme({
 
 export default function TitlePage({ isMobile }) {
     return (
-
         <>
             <Fade
                 in={true}

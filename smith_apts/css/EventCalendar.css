@@ -85,3 +85,8 @@
     border-radius: 10px;
     padding: 5px;
 }
+
+.highlight {
+    background-color: green !important;  /* override the default background */
+    color: white !important;             /* override the default text color */
+}

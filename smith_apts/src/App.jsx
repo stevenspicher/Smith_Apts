@@ -30,9 +30,9 @@ const App = () => {
                 {/*    <Typography variant={isMobile ? "h4" : "h1"}>Windy City Smiths</Typography>*/}
                 {/*</Box>*/}
                 <Routes>
-                    <Route path="/rental" element={<RentalPage />} />
+                    <Route path="/" element={<RentalPage />} />
                     <Route path="/calendar" element={<CalendarPage />} />
-                    <Route path="/" element={<MapPage />} />
+                    <Route path="/map" element={<MapPage />} />
                     <Route path="/checkout" element={<Checkout />} />
                 </Routes>
             </Box>

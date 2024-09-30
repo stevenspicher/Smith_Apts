@@ -1,129 +1,137 @@
 import React, {useEffect, useState} from 'react';
-import {Button} from "@mui/material";
+import {Button, Paper} from "@mui/material";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../../css/EventCalendar.css'
 import Stack from "react-bootstrap/Stack";
 import {Grid2} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
+import Fade from "@mui/material/Fade";
+import {Box} from "@mui/system";
+import Typography from "@mui/material/Typography";
+import { db } from '../../firebase';
+import { collection, addDoc } from "firebase/firestore";
 
+/*
+link to airbnb
+ */
+
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 2,
+    // p: 4,
+};
 
 
 const CalendarPage = () => {
-    const navigate = useNavigate();
     const [date, setDate] = useState(new Date());
 
-
-    // Array of dates you want to highlight and make clickable
-    const highlightDates = [
-        {
-            date: new Date(2024, 3, 6),
-            venue: "Gruner Brothers Brewing - April 6th",
-            website: "https://grunerbrewing.com/",
-            // logo: grunerLogo,
-            menu: "Spring Salad, " +
-                "\n" +
-                "Marry Me Chicken (grilled chicken in thyme & sundried tomato cream sauce over angel hair pasta,\n" +
-                "Gluten-Free option available), " +
-                "\n" +
-                "Cheesecake",
-            cost: "57",
-            color: "blue",
-            showOptions: false,
-            optionsList: [{value: 1, label:"Gluten Free"}],
-            showCheckout: false
-        },
-        {
-            date: new Date(2024, 3, 26),
-            venue: "The Invasion Bar and Restaurant - Kaycee, WY",
-            website: "https://www.invasionbar.com/",
-            // logo: invasionLogo,
-            menu: "Salad, Lasagna, Dessert, Drink",
-            cost: "57",
-            color: "red",
-            showOptions: false,
-            showCheckout: true
-        },
-        {
-            date: new Date(2024, 4, 18),
-            venue: "Gruner Brothers Brewing - May 18th",
-            // logo: grunerLogo,
-            website: "https://grunerbrewing.com/",
-            menu: "Gumbo or Muffaleta, Jambalaya, Beignets",
-            cost: "57",
-            color: "yellow",
-            showOptions: true,
-            optionsList: [],
-            showCheckout: true
-
-        }
-    ];
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     const handleDateChange = (date) => {
         setDate(date);
-        const index = highlightDates.findIndex(
-            d => d.date.getFullYear() === date.getFullYear() &&
-                d.date.getMonth() === date.getMonth() &&
-                d.date.getDate() === date.getDate());
-        setInfo(index);
-        setShow(true);
-        setNumberOfTickets(0)
 
+        // If there's no startDate set, set the selected date as startDate. If startDate already exists, set the selected date as endDate
+        if (!startDate) {
+            setStartDate(date);
+        } else if (!endDate) {
+            setEndDate(date);
+        } else {
+            // Reset the dates if there are already two selected dates
+            setStartDate(date);
+            setEndDate(null);
+        }
     };
 
-    const handleFormSubmit = (event) => {
-        event.preventDefault();
-        // do something with the form field values
-        // for example you can just print them to the console
+    const getDatesBetween = (startDate, endDate) => {
+        var dates = [];
+        var currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+            dates.push(new Date(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        return dates;
+    }
+    const isInRange = (date, start, end) => {
+        return date >= start && date <= end;
+    }
 
+
+
+
+    const handleFormSubmit = async () => {
+        if (startDate && endDate) {
+            let datesWithinRange = getDatesBetween(startDate, endDate);
+            console.log(datesWithinRange);
+            for (const date of datesWithinRange) {
+                try {
+                    const docRef = await addDoc(collection(db,"dates-booked"), {
+                        bookedDate: date
+                    });
+                    console.log("Document written with ID: ", docRef.id);
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+            }
+        } else {
+            console.log("Please select a valid date range.");
+        }
     };
     return (
-        <div className="container">
-            <div className="row">
-                <div>
-                    <div className={"showinfo"}>
-                    </div>
-                    <div className="text-center py-3">
-                        <div className={"calendar-border"}>
+        <>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                    handleOpen()
+                }}
+            >View Availability</Button>
+
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+            >
+                <Fade in={open}>
+                    <Box sx={style}>
+                        <Paper>
+                            <Typography>Select Start and End Dates:</Typography>
                             <Calendar
                                 onChange={handleDateChange}
                                 value={date}
                                 minDate={new Date(2024, 3, 1)}
                                 maxDate={new Date(2025, 6, 31)}
-                                navigationA11yLabel=""
-                                prev2AriaLabel=""
-                                next2AriaLabel=""
                                 tileClassName={({date, view}) => {
-                                    if (view === 'month') {
-                                        const highlight = highlightDates.find(d =>
-                                            d.date.getFullYear() === date.getFullYear() &&
-                                            d.date.getMonth() === date.getMonth() &&
-                                            d.date.getDate() === date.getDate()
-                                        );
-
-                                          // return the color of the venue
-
+                                    // If both dates are set, highlight the range
+                                    if(startDate && endDate && view === 'month' && isInRange(date, startDate, endDate)) {
+                                        return 'highlight';
                                     }
                                 }}
                             />
+                            <Button
+                                onClick={handleFormSubmit}
+                            >Submit</Button>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <Grid2  xs={12} sm={6}>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => {navigate("/rental")}}
-                >Rental</Button>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => {navigate("/")}}
-                >Map</Button>
-            </Grid2>
-        </div>
+                        </Paper>
+                    </Box>
+                </Fade>
+            </Modal>
+        </>
     );
 }
 
