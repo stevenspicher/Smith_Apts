@@ -12,7 +12,7 @@ import Fade from "@mui/material/Fade";
 import {Box} from "@mui/system";
 import Typography from "@mui/material/Typography";
 import { db } from '../../firebase';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs  } from "firebase/firestore";
 
 /*
 link to airbnb
@@ -40,6 +40,8 @@ const CalendarPage = () => {
     const handleClose = () => setOpen(false);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+
+    const [bookedDates, setBookedDates] = useState([]);
 
     const handleDateChange = (date) => {
         setDate(date);
@@ -69,22 +71,47 @@ const CalendarPage = () => {
         return date >= start && date <= end;
     }
 
+    useEffect(() => {
+        const fetchBookedDates = async () => {
+            const bookedDatesCollection = collection(db, "dates-booked");
+            const bookedDatesSnapshot = await getDocs(bookedDatesCollection);
+            const bookedDatesArray = [];
+            bookedDatesSnapshot.forEach(doc => {
+                const data = doc.data();
+                data.bookedDates.forEach(timestamp => {
+                    bookedDatesArray.push(new Date(timestamp));
+                });
+            });
+            setBookedDates(bookedDatesArray);
+        };
+        fetchBookedDates();
+    }, []);
 
-
+    const isBooked = (date) => {
+        return bookedDates.some(bookedDate => bookedDate.getDate() === date.getDate() && bookedDate.getMonth() === date.getMonth() && bookedDate.getFullYear() === date.getFullYear());
+    }
 
     const handleFormSubmit = async () => {
         if (startDate && endDate) {
+
+            //Get dates between range
             let datesWithinRange = getDatesBetween(startDate, endDate);
+
+            //Convert dates to timestamp
+            datesWithinRange = datesWithinRange.map(date => date.getTime());
+
             console.log(datesWithinRange);
-            for (const date of datesWithinRange) {
-                try {
-                    const docRef = await addDoc(collection(db,"dates-booked"), {
-                        bookedDate: date
-                    });
-                    console.log("Document written with ID: ", docRef.id);
-                } catch (e) {
-                    console.error("Error adding document: ", e);
-                }
+
+            try {
+                //Save the dates to Firebase
+                const docRef = await addDoc(collection(db,"dates-booked"), {
+                    bookedDates: datesWithinRange
+                });
+
+                console.log("Document written with ID: ", docRef.id);
+
+            } catch (e) {
+                console.error("Error adding document: ", e);
             }
         } else {
             console.log("Please select a valid date range.");
@@ -119,9 +146,17 @@ const CalendarPage = () => {
                                 minDate={new Date(2024, 3, 1)}
                                 maxDate={new Date(2025, 6, 31)}
                                 tileClassName={({date, view}) => {
+                                    if(isBooked(date)) {
+                                        return 'booked';
+                                    }
                                     // If both dates are set, highlight the range
                                     if(startDate && endDate && view === 'month' && isInRange(date, startDate, endDate)) {
                                         return 'highlight';
+                                    }
+                                }}
+                                tileDisabled={({date, view}) => {
+                                    if (view === 'month') {
+                                        return isBooked(date);
                                     }
                                 }}
                             />

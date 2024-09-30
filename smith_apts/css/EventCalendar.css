@@ -90,3 +90,8 @@
     background-color: green !important;  /* override the default background */
     color: white !important;             /* override the default text color */
 }
+
+.booked {
+    background-color: grey !important;  /* override the default background */
+    color: white !important;             /* override the default text color */
+}
