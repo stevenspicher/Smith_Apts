@@ -6,6 +6,7 @@ import CalendarPage from "./Components/Calendar.jsx";
 import MapPage from "./Components/MapPage.jsx";
 import TitlePage from "./Components/TitlePage.jsx";
 import Checkout from "./Components/Checkout.jsx";
+import Admin from "./Components/Admin.jsx";
 
 
 
@@ -31,9 +32,8 @@ const App = () => {
                 {/*</Box>*/}
                 <Routes>
                     <Route path="/" element={<RentalPage />} />
-                    <Route path="/calendar" element={<CalendarPage />} />
                     <Route path="/map" element={<MapPage />} />
-                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/admin" element={<Admin />} />
                 </Routes>
             </Box>
         </Router>

@@ -90,15 +90,6 @@ const RentalPage = () => {
                     <Grid2 margin={"5px"} xs={12} sm={6}>
                         <CalendarPage/>
                     </Grid2>
-                    {/*<Grid2 margin={"5px"} xs={12} sm={6}>*/}
-                    {/*    <Button*/}
-                    {/*        variant="contained"*/}
-                    {/*        color="secondary"*/}
-                    {/*        onClick={() => {*/}
-                    {/*            navigate("/checkout")*/}
-                    {/*        }}*/}
-                    {/*    >Rent this Home</Button>*/}
-                    {/*</Grid2>*/}
                     <Grid2 margin={"5px"} xs={12} sm={6}>
                         <Button
                             margin={"5px"}
@@ -108,6 +99,23 @@ const RentalPage = () => {
                                 navigate("/map")
                             }}
                         >Map</Button>
+                    </Grid2>
+
+                    <Grid2 margin={"5px"} xs={12} sm={6}>
+                        <Button
+                            margin={"5px"}
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => {
+                                const password = prompt("Please enter the password:");
+
+                                if (password === "windycity123") {
+                                    navigate("/admin")
+                                } else {
+                                    navigate("/rental");
+                                }
+                            }}
+                        >Admin</Button>
                     </Grid2>
                 </Box>
 
