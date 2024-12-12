@@ -13,6 +13,11 @@ import {Box} from "@mui/system";
 import Typography from "@mui/material/Typography";
 import {db} from '../../firebase';
 import {collection, addDoc, getDocs} from "firebase/firestore";
+import Checkout from "./PaymentModals/CheckoutModal.jsx";
+import {
+    PayPalScriptProvider,
+    PayPalButtons,
+} from "@paypal/react-paypal-js";
 
 /*
 link to airbnb
@@ -24,8 +29,9 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 600,
     bgcolor: 'background.paper',
+    overflowY: 'auto', // Vertical scrolling
     // border: '2px solid #000',
     // boxShadow: 2,
     // p: 4,
@@ -57,6 +63,13 @@ const CalendarPage = () => {
     const handleCheckoutClose = () => {
         setCheckoutOpen(false);
     }
+
+    const initialOptions = {
+        "client-id": 'AVHdlUjjl49BqebNpOl_iv3hv2TZMBet1ZufwX2bxSS-0W6tbLnVg83KPSBszOCaGkkyUwqzVeWBoJGL',
+        currency: "USD",
+        intent: "capture",
+        disableFunding: "credit",
+    };
 
     const handleVerifyOpen = () => setVerifyOpen(true);
     const handleVerifyClose = () => setVerifyOpen(false);
@@ -229,7 +242,7 @@ const CalendarPage = () => {
             >
                 <Fade in={checkoutOpen}>
                     <Box sx={style}>
-                        <Paper style={{padding: '20px', margin: '10px'}}>
+                        <Paper style={{padding: '2px', margin: '2px'}}>
                             <Typography variant="h4" id="checkout-modal-title" gutterBottom>Checkout</Typography>
                             <Typography id="checkout-modal-description"
                                         gutterBottom>Check-in: {startDate?.toLocaleDateString()}</Typography>
@@ -239,65 +252,21 @@ const CalendarPage = () => {
                                 Days: {totalDays}</Typography>
                             <Typography id="checkout-modal-description" gutterBottom>Total Cost:
                                 ${totalCost}</Typography>
-                            <TextField
-                                fullWidth
-                                label="Name"
-                                type="text"
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                                margin="dense"
-                                variant="outlined"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Phone Number"
-                                onChange={(e) => setPhone(e.target.value)}
-                                type="text"
-                                inputProps={{maxLength: 16}}
-                                required
-                                margin="dense"
-                                variant="outlined"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Email"
-                                onChange={(e) => setEmail(e.target.value)}
-                                type="text"
-                                required
-                                margin="dense"
-                                variant="outlined"
-                            />
 
-                            <TextField
-                                fullWidth
-                                label="Card Number"
-                                type="text"
-                                disabled
-                                inputProps={{maxLength: 16}}
-                                required
-                                margin="dense"
-                                variant="outlined"
-                            />
-                            <Box display="flex" justifyContent="space-between" marginBottom="15px">
-                                <TextField
-                                    label="Expiry Date"
-                                    type="text"
-                                    disabled
-                                    inputProps={{maxLength: 5}}
-                                    required
-                                    margin="dense"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    label="CVV"
-                                    disabled
-                                    type="text"
-                                    inputProps={{maxLength: 3}}
-                                    required
-                                    margin="dense"
-                                    variant="outlined"
-                                />
-                            </Box>
+
+                            <PayPalScriptProvider options={initialOptions}>
+                                <Checkout
+                                    totalCost={totalCost}
+                                    options={{
+                                    venue: "venue",
+                                    date: 1/1/1,
+                                    numberOfTickets: 30,
+                                    totalCost: totalCost,
+                                    specialInstructions: "specialInstructions",
+                                    // ticketObj: ticketObj"
+                                }}/>
+                            </PayPalScriptProvider>
+
 
                             <Button variant="contained" color="primary" onClick={() => {
                                 handleCheckoutClose();
