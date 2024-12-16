@@ -1,9 +1,19 @@
 import {Button, Container, Divider, Grid2, Stack, Typography} from "@mui/material";
 import {Box} from "@mui/system";
 import {useNavigate} from "react-router-dom";
-import livingRoom from "../assets/living_room.jpg";
-import bathroom from "../assets/bathroom.jpg";
-import frontDoor from "../assets/front_door.jpg"
+import ext from "../assets/exterior.avif"
+import ext2 from "../assets/ext2.avif"
+import livingroom1 from "../assets/livingroom1.avif"
+import livingroom2 from "../assets/livingroom2.avif"
+import bedroom1 from "../assets/bedroom1.avif";
+import bedroom2 from "../assets/bedroom2.avif";
+import bedroom3 from "../assets/bedroom3.avif";
+import bathroom from "../assets/bathroom.avif";
+import shower from "../assets/shower.avif";
+import kitchen from "../assets/kitchen.avif"
+import kitchen2 from "../assets/kitchen2.avif"
+import kitchen3 from "../assets/kitchen3.avif"
+import kitchen4 from "../assets/kitchen4.avif"
 import {Carousel} from 'react-bootstrap';
 
 import BedIcon from '@mui/icons-material/Bed';
@@ -12,7 +22,7 @@ import CalendarPage from "./Calendar.jsx";
 
 const RentalPage = () => {
     const navigate = useNavigate();
-    const images = [frontDoor, livingRoom, bathroom]; // You should replace this with actual image URLs
+    const images = [ext, ext2, livingroom1, livingroom2, kitchen, kitchen2, kitchen3, kitchen4, bedroom1, bedroom2, bedroom3, bathroom, shower];
     const highlights = [
         "Free Wifi",
         "Grill",
