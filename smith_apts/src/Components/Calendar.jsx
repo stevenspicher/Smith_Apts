@@ -37,8 +37,9 @@ const style = {
     // p: 4,
 };
 
-
+const rentalCost = 100
 const CalendarPage = () => {
+
     const [date, setDate] = useState(new Date());
 
     const [open, setOpen] = useState(false);
@@ -127,7 +128,7 @@ const CalendarPage = () => {
 
         if (startDate && endDate) {
             const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-            const cost = totalDays * 100;
+            const cost = totalDays * rentalCost;
             setTotalCost(cost);
             setTotalDays(totalDays);
             handleClose()
@@ -254,18 +255,10 @@ const CalendarPage = () => {
                                 ${totalCost}</Typography>
 
 
-                            <PayPalScriptProvider options={initialOptions}>
-                                <Checkout
-                                    totalCost={totalCost}
-                                    options={{
-                                    venue: "venue",
-                                    date: 1/1/1,
-                                    numberOfTickets: 30,
-                                    totalCost: totalCost,
-                                    specialInstructions: "specialInstructions",
-                                    // ticketObj: ticketObj"
-                                }}/>
-                            </PayPalScriptProvider>
+                            {/*<PayPalScriptProvider options={initialOptions}>*/}
+                            {/*    <Checkout*/}
+                            {/*        totalCost={totalCost}/>*/}
+                            {/*</PayPalScriptProvider>*/}
 
 
                             <Button variant="contained" color="primary" onClick={() => {

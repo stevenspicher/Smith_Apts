@@ -1,10 +1,10 @@
-// import React from 'react';
+
 import {PayPalButtons} from "@paypal/react-paypal-js";
-// import {Modal} from "react-bootstrap";
-// import {addTicketGroup} from "../../../services/firebase/dbFunction";
+import {addDoc, collection} from "firebase/firestore";
+
 
 const Checkout = (props) => {
-console.log(props)
+    console.log(props)
     const onCreateOrder = (data, actions) => {
         return actions.order.create({
             purchase_units: [
@@ -17,36 +17,35 @@ console.log(props)
         });
     }
 
-    const onApproveOrder = (data, actions) => {
+    const onApproveOrder = async (data, actions) => {
         return actions.order.capture().then((details) => {
-            const name = details.payer.name.given_name;
-            const venue = props.options.venue;
-            details.ticketInfo = props.options
-            addTicketGroup(details).then(() => {
-                props.handleClose();
-                props.closeTicketModal();
-                alert(name + ", thank you for your purchase! We will see you at " + venue + ". No need to provide a ticket - Ticket holder names will be checked at the door.")})
-            ;
-        });
-    }
+            props.handleClose();
+            //send dates to db
+            addDoc(collection(db,"dates-booked"), {
+                bookedDates: datesWithinRange
+            });
+            alert(name + ", thank you for your purchase! ")
+        })
+    };
+
     return (
         <>
             <div className="checkout"
-                     style={{
-                         height: "300px",
-                         overflowY: 'auto', // Vertical scrolling
-                     }}>
-                    <>
-                        <PayPalButtons
-                            style={{
-                                layout: "vertical",
+                 style={{
+                     height: "300px",
+                     overflowY: 'auto', // Vertical scrolling
+                 }}>
+                <>
+                    <PayPalButtons
+                        style={{
+                            layout: "vertical",
                         }}
-                            createOrder={(data, actions) => onCreateOrder(data, actions)}
-                            onApprove={(data, actions) => onApproveOrder(data, actions)}
-                        />
-                    </>
-                </div>
-</>
+                        createOrder={(data, actions) => onCreateOrder(data, actions)}
+                        onApprove={(data, actions) => onApproveOrder(data, actions)}
+                    />
+                </>
+            </div>
+        </>
     );
 }
 
