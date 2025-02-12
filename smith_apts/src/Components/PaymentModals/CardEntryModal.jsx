@@ -18,7 +18,7 @@ function CardEntryModal({
     const [showPaymentOptions, setShowPaymentOptions] = useState(false)
     const [showTicketModal, setShowTicketModal] = useState(true)
     const initialOptions = {
-        "client-id": 'AVHdlUjjl49BqebNpOl_iv3hv2TZMBet1ZufwX2bxSS-0W6tbLnVg83KPSBszOCaGkkyUwqzVeWBoJGL',
+        "client-id": 'AXDeScN0RLU4ANgSucbmlkp18FI8syzOtqLaNlbwlWD7_nMYgd4xeLXTZ13DindEtq0zs51FRie4a3iS',
         currency: "USD",
         intent: "capture",
         disableFunding: "credit",
